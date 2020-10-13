@@ -1,1 +1,3 @@
 # dankook_dacon
+
+####제출은 결국 EDA 이후 TUNAOPT & lgb만...
