@@ -104,6 +104,7 @@ def train_model(model_name, params, X, y):
     print("\nStart training...")
     print(f"Model: {model_name}")
 
+    model_scores = []
     # K-fold CV
     kf = KFold(n_splits=8, random_state=SEED, shuffle=True)
     for train_index, test_index in kf.split(X):
@@ -111,7 +112,11 @@ def train_model(model_name, params, X, y):
         train_y, test_y = y.iloc[train_index], y.iloc[train_index]
 
         model.fit(train_X, train_y)
-    print(f"Model ACC: {model.score(test_X, test_y)}%")
+        print(f"Model ACC: {model.score(test_X, test_y)}%")
+        model_scores.append(model.score(test_X, test_y))
+    for sc in model_scores:
+        print(f'{sc} %')
+    print(f"Max ACC: {max(model_scores)}")
     return model
 
 
