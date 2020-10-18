@@ -1,3 +1,5 @@
+# Fine tuning for DKU Dacon competition
+
 import pandas as pd
 import numpy as np
 import lightgbm as lgb
@@ -15,35 +17,8 @@ from sklearn.metrics import accuracy_score, confusion_matrix
 from sklearn.preprocessing import StandardScaler
 from sklearn.tree import DecisionTreeClassifier
 
-from src.params import DATA_PATH, SEED
-
-
-def load_data():
-    # load train, test data
-    train_data = pd.read_csv(f'{DATA_PATH}/train.csv')
-    test_data = pd.read_csv(f'{DATA_PATH}/test.csv')
-
-    print(f"train data: {len(train_data)}")
-    print(f"test data: {len(test_data)}")
-
-    return train_data, test_data
-
-
-def divide_data(data, dtype='train'):
-    # Separate X, y from data, return whole data if test
-    if dtype == 'train':
-        X = data.iloc[:, :-1]
-        y = data.iloc[:, -1:]['class']
-
-        print(f"train X \n {X.describe()}")
-        print(f"train y \n {y.describe()}")
-
-        return X, y
-    elif dtype == 'test':
-        print(f"test X \n {data.describe()}")
-        return data
-    else:
-        return None
+from src.params import SEED
+from src.data import divide_data, load_data
 
 
 def objective(trial):
@@ -152,6 +127,11 @@ def objective(trial):
     return cross_val_score(model, train_X, train_y, n_jobs=-1, scoring='accuracy', cv=kf).mean()
 
 
+def save_best_trial(params):
+    with open('./src/best_params.json', 'w') as p_json:
+        p_json.write(params)
+
+
 def start_fine_tuning():
     # run fine tuning
     study = optuna.create_study(direction='maximize')
@@ -160,6 +140,8 @@ def start_fine_tuning():
     trial = study.best_trial
     print('Accuracy: {}'.format(trial.value))
     print("Best hyperparameters: {}".format(trial.params))
+
+    save_best_trial(trial.params)
 
 
 if __name__ == '__main__':
