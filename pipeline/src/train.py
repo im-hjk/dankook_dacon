@@ -109,7 +109,7 @@ def train_model(model_name, params, X, y):
     kf = KFold(n_splits=8, random_state=SEED, shuffle=True)
     for train_index, test_index in kf.split(X):
         train_X, test_X = X.iloc[train_index], X.iloc[test_index]
-        train_y, test_y = y.iloc[train_index], y.iloc[train_index]
+        train_y, test_y = y.iloc[train_index], y.iloc[test_index]
 
         model.fit(train_X, train_y)
         print(f"Model ACC: {model.score(test_X, test_y)}%")
