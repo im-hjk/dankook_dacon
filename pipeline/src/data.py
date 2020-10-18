@@ -1,3 +1,10 @@
+import json
+import os
+import sys
+
+sys.path.append(os.path.abspath(os.path.pardir))
+sys.path.append(os.path.abspath(os.path.curdir))
+
 import pandas as pd
 
 from src.params import DATA_PATH
@@ -29,3 +36,15 @@ def divide_data(data, dtype='train'):
         return data
     else:
         return None
+
+
+def best_param(path='./src/best_params.json'):
+    if os.path.exists(path):
+        with open(path, 'r') as p_json:
+            param = json.load(p_json)
+        return param
+
+
+if __name__ == '__main__':
+    param = best_param('../src/best_params.json')
+    print(param)

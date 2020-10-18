@@ -1,7 +1,12 @@
 import argparse
+import os
 import sys
 
+sys.path.append(os.path.abspath(os.path.curdir))
+
 from src.fine_tuning import start_fine_tuning
+from src.train import run_training
+from src.inference import run_inference
 
 
 if __name__ == '__main__':
@@ -16,6 +21,6 @@ if __name__ == '__main__':
     if target_process == 'tuning':
         start_fine_tuning()
     elif target_process == 'training':
-        pass
+        run_training()
     elif target_process == 'inference':
-        pass
+        run_inference()

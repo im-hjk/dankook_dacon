@@ -1,5 +1,10 @@
 # Fine tuning for DKU Dacon competition
 
+import os
+import sys
+
+sys.path.append(os.path.abspath(os.path.curdir))
+
 import pandas as pd
 import numpy as np
 import lightgbm as lgb
