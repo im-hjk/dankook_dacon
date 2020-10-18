@@ -9,6 +9,7 @@
 
 # Data files
 *.csv
+*.zip
 
 # Created by git when using merge tools for conflicts
 *.BACKUP.*
