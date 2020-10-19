@@ -1,0 +1,5 @@
+{
+  "classifier": "Xgboost",
+  "xgb_max_depth": 64,
+  "xgb_learning_rate": 0.1
+}
